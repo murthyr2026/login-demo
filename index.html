@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in | Login Demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0; min-height: 100vh; min-height: 100svh;
+      display: grid; place-items: center; padding: 24px;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #17243b;
+      background: radial-gradient(circle at 15% 10%, #dce7ff, transparent 45%),
+                  radial-gradient(circle at 90% 90%, #e3ddfa, transparent 40%), #f4f6fb;
+    }
+    .card {
+      width: 100%; max-width: 440px; padding: 36px;
+      background: #fff; border: 1px solid #e1e6f0; border-radius: 24px;
+      box-shadow: 0 20px 65px #23395614;
+    }
+    .icon {
+      display: grid; place-items: center; width: 48px; height: 48px;
+      margin-bottom: 24px; border-radius: 14px; color: #3857cb; background: #edf1ff;
+    }
+    .eyebrow { font-size: 12px; font-weight: 750; letter-spacing: .14em; color: #3857cb; }
+    h1 { margin: 8px 0 10px; font-size: 32px; line-height: 1.2; letter-spacing: -.04em; }
+    .intro { margin: 0 0 28px; color: #58657c; line-height: 1.6; }
+    label { display: block; margin: 18px 0 8px; font-size: 14px; font-weight: 650; }
+    input {
+      width: 100%; min-height: 48px; padding: 12px 14px;
+      border: 1px solid #8793aa; border-radius: 10px;
+      background: #fff; color: #17243b; font: inherit;
+    }
+    input::placeholder { color: #657189; }
+    input[aria-invalid="true"] { border-color: #b42318; }
+    input:focus-visible, button:focus-visible, summary:focus-visible, h1:focus-visible {
+      outline: 3px solid #3857cb; outline-offset: 3px;
+    }
+    .password-wrap { position: relative; }
+    .password-wrap input { padding-right: 78px; }
+    button { font: inherit; cursor: pointer; }
+    .toggle {
+      position: absolute; right: 4px; top: 3px; min-width: 64px; min-height: 42px;
+      padding: 8px; border: 0; border-radius: 7px;
+      background: transparent; color: #3857cb; font-size: 14px; font-weight: 650;
+    }
+    .toggle:hover { background: #edf1ff; }
+    .primary {
+      width: 100%; min-height: 48px; padding: 12px 18px;
+      border: 0; border-radius: 10px; background: #3857cb; color: #fff; font-weight: 650;
+    }
+    .primary:hover { background: #2944ad; }
+    .primary:disabled { opacity: .6; cursor: not-allowed; }
+    .error { min-height: 22px; margin: 12px 0; color: #b42318; font-size: 14px; line-height: 1.5; }
+    details { margin-top: 24px; padding-top: 20px; border-top: 1px solid #e7ebf2; }
+    summary { width: fit-content; color: #58657c; cursor: pointer; font-size: 14px; }
+    table { width: 100%; margin-top: 14px; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e7ebf2; }
+    td { font-family: ui-monospace, monospace; }
+    .note { margin: 24px 0 0; font-size: 12px; color: #58657c; line-height: 1.6; }
+    .success-icon { background: #e7f6ed; color: #22734a; }
+    @media (max-width: 480px) {
+      body { padding: 16px; }
+      .card { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <section id="login-screen" aria-labelledby="login-title">
+      <div class="icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="5" y="10" width="14" height="11" rx="3" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" />
+        </svg>
+      </div>
+      <span class="eyebrow">LOGIN DEMO</span>
+      <h1 id="login-title">Welcome back.</h1>
+      <p class="intro">Enter your User ID and password to sign in.</p>
+
+      <form id="login-form" method="post">
+        <label for="user-id">User ID</label>
+        <input id="user-id" name="username" type="text" placeholder="e.g. User1"
+               autocomplete="username" autocapitalize="none" spellcheck="false"
+               aria-describedby="login-error" required>
+
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input id="password" name="password" type="password" placeholder="Enter your password"
+                 autocomplete="current-password" aria-describedby="login-error" required>
+          <button id="toggle-password" class="toggle" type="button"
+                  aria-controls="password" aria-label="Show password">Show</button>
+        </div>
+
+        <p id="login-error" class="error" role="alert" aria-atomic="true"></p>
+        <button id="sign-in" class="primary" type="submit" disabled>Sign in</button>
+        <noscript><p>Enable JavaScript in your browser to try this demo.</p></noscript>
+      </form>
+
+      <details id="demo-accounts">
+        <summary>Try a demo account</summary>
+        <table aria-label="Demo accounts">
+          <thead><tr><th scope="col">User ID</th><th scope="col">Password</th></tr></thead>
+          <tbody>
+            <tr><td>User1</td><td>PW1</td></tr>
+            <tr><td>User2</td><td>PW2</td></tr>
+            <tr><td>User3</td><td>PW3</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <section id="welcome-screen" aria-labelledby="welcome-title" hidden>
+      <div class="icon success-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m5 12 4 4L19 6" />
+        </svg>
+      </div>
+      <span class="eyebrow">LOGIN SUCCESSFUL</span>
+      <h1 id="welcome-title" tabindex="-1">You're signed in.</h1>
+      <p id="welcome-message" class="intro"></p>
+      <!-- Add your demo content here. This section does not protect private data. -->
+      <button id="sign-out" class="primary" type="button">Sign out</button>
+    </section>
+
+    <p class="note">Demo only. These sample accounts are public. Use only the demo passwords here.</p>
+  </main>
+
+  <script>
+    // DEMO ONLY: browser code is visible and can be bypassed.
+    // Real authentication must verify users and permissions on a server.
+    const users = new Map([
+      ["User1", "PW1"],
+      ["User2", "PW2"],
+      ["User3", "PW3"]
+    ]);
+
+    const form = document.getElementById("login-form");
+    const userId = document.getElementById("user-id");
+    const password = document.getElementById("password");
+    const error = document.getElementById("login-error");
+    const toggle = document.getElementById("toggle-password");
+    const loginScreen = document.getElementById("login-screen");
+    const welcomeScreen = document.getElementById("welcome-screen");
+    const welcomeTitle = document.getElementById("welcome-title");
+    const welcomeMessage = document.getElementById("welcome-message");
+
+    function clearError() {
+      error.textContent = "";
+      userId.removeAttribute("aria-invalid");
+      password.removeAttribute("aria-invalid");
+    }
+
+    function hidePassword() {
+      password.type = "password";
+      toggle.textContent = "Show";
+      toggle.setAttribute("aria-label", "Show password");
+    }
+
+    toggle.addEventListener("click", () => {
+      const show = password.type === "password";
+      password.type = show ? "text" : "password";
+      toggle.textContent = show ? "Hide" : "Show";
+      toggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
+    });
+
+    form.addEventListener("input", clearError);
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault(); // Keep the demo in this page; do not send credentials.
+      clearError();
+      const enteredUser = userId.value.trim();
+
+      if (!users.has(enteredUser) || users.get(enteredUser) !== password.value) {
+        error.textContent = "Incorrect User ID or password. Please try again.";
+        userId.setAttribute("aria-invalid", "true");
+        password.setAttribute("aria-invalid", "true");
+        password.value = "";
+        hidePassword();
+        password.focus();
+        return;
+      }
+
+      welcomeMessage.textContent = `Welcome, ${enteredUser}! This is your demo welcome screen.`;
+      form.reset();
+      hidePassword();
+      document.getElementById("demo-accounts").open = false;
+      loginScreen.hidden = true;
+      welcomeScreen.hidden = false;
+      document.title = "Welcome | Login Demo";
+      welcomeTitle.focus();
+    });
+
+    document.getElementById("sign-out").addEventListener("click", () => {
+      form.reset();
+      clearError();
+      hidePassword();
+      welcomeMessage.textContent = "";
+      welcomeScreen.hidden = true;
+      loginScreen.hidden = false;
+      document.title = "Sign in | Login Demo";
+      userId.focus();
+    });
+
+    // Enable only after the JavaScript handlers are ready.
+    document.getElementById("sign-in").disabled = false;
+  </script>
+</body>
+</html>
